@@ -1,0 +1,29 @@
+{
+  "name": "zhitongtianxia",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "@remobile/react-native-toast": "^1.0.4",
+    "immutable": "^3.8.1",
+    "react": "15.2.1",
+    "react-native": "0.31.0",
+    "react-native-communications": "2.1.0",
+    "react-native-fs": "^2.0.1-rc.2",
+    "react-native-image-picker": "^0.21.5",
+    "react-native-keyboard-spacer": "^0.3.0",
+    "react-native-root-modal": "^1.0.4",
+    "react-native-router-flux": "^3.34.0",
+    "react-native-swiper": "^1.4.9",
+    "react-native-vector-icons": "^2.0.3",
+    "react-redux": "^4.4.5",
+    "react-router": "2.6.1",
+    "react-swipeable-views": "0.6.5",
+    "redux": "^3.5.2",
+    "redux-immutablejs": "0.0.8",
+    "redux-router": "2.1.2",
+    "rn-alipay": "0.2.3"
+  }
+}
