@@ -22,10 +22,9 @@ import { Actions, Ionicons } from '../../modules/adapter';
 class ProjectPage extends Component {
     constructor(props) {
         super(props);
-        console.log(props.pageData);
 
         this.state = {
-            pageData: props.pageData,
+            pageData: props.pageData.list,
         }
         function getSectionHeaderData(dataBlob, sectionId) {
             return sectionId;
@@ -52,7 +51,14 @@ class ProjectPage extends Component {
 
     goToProject(rowData) {
         console.log(rowData);
+        Actions.ProjectInfoPage({
+            pageUrl: GlobalData.addParams(GlobalData.user.server + pageConfig.projectInfoPageUrl, {
+                engId: rowData.engId,
+            }),
+            title: rowData.name,
+        });
     }
+
     renderRow(rowData) {
         return (
             <TouchableHighlight
@@ -112,6 +118,8 @@ class ProjectPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: GlobalData.headerbarHeight,
+        marginBottom: 50,
     },
     list: {
         flex: 1,
@@ -128,34 +136,32 @@ const styles = StyleSheet.create({
         backgroundColor: '#ddd',
         height: 30,
         padding: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     listRow: {
         height: 40,
         borderBottomColor: '#ddd',
         borderBottomWidth: 1,
         justifyContent: 'center',
-        padding: 10
+        padding: 10,
     },
     searchBar: {
-        height: 50,
+        height: 40,
         flexDirection: 'row',
+        padding: 5,
+        borderColor: GlobalData.colors.lineLight,
+        borderBottomWidth: 1 / PixelRatio.get(),
     },
     searchInput: {
-        padding: 5,
+        padding: 3,
+        paddingHorizontal: 10,
         flex: 1,
         borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 3
-    },
-    searchBtn: {
-        width: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#000',
+        borderColor: GlobalData.colors.lineLight,
+        backgroundColor: '#f9f9f9',
         borderRadius: 3,
-        marginLeft: 5
+        height: 30,
+        fontSize: 14,
     },
     items: {
         flexDirection: 'row',
@@ -181,7 +187,7 @@ export default connect(
     })
 )(props => {
     const pageConfigData = {
-        pageUrl: 'http://192.168.1.178:9012/home/CityEngList',
+        pageUrl: GlobalData.user.server + pageConfig.projectData.pageUrl,
         pageKey: pageConfig.projectData.pageKey,
     };
     return (

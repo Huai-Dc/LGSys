@@ -2,7 +2,7 @@
  * Created by sujiexu on 16/8/19.
  */
 'use strict';
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     StyleSheet,
     Text,
@@ -10,8 +10,6 @@ import {
     ScrollView,
     TouchableOpacity,
     PixelRatio,
-    TextInput,
-    Dimensions,
 } from 'react-native';
 
 import LoadView from '../../modules/LoadView';
@@ -21,18 +19,25 @@ import GlobalData from '../../GlobalData';
 import { Actions, Ionicons, Modal } from '../../modules/adapter';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
+import DownloadItem from './DownloadItem';
 
 class FlowContentPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showAuditModal: false,
+            showActionButtons: false,
+            commentText: '',
         };
     }
 
-    doAudit() {
-        this.setState({
-            showAuditModal: true,
+    showAudit() {
+        // this.setState({
+        //     showAuditModal: true,
+        //     showActionButtons: false,
+        // });
+        Actions.FlowAuditPage({
+            pageData: this.props.cacheData,
         });
     }
 
@@ -45,13 +50,31 @@ class FlowContentPage extends Component {
             </TouchableOpacity>
         );
     }
+    doTransmit() {
+
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.cacheData.reload) {
+            this.props.refresh(true);
+            return false;
+        }
+        return true;
+    }
+    goFlowApproveLogPage() {
+        const pageUrl = GlobalData.addParams(GlobalData.user.server + pageConfig.commonApproveLogUrl, {
+            flowInstanceId: this.props.cacheData.flowInstanceId,
+        })
+        Actions.FlowApproveLogPage({
+            pageUrl,
+        });
+    }
     render() {
-        console.log(this.props.pageData);
-        const { pageData } = this.props;
+        // console.log(this.props.pageData);
+        const { cacheData } = this.props;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.flex}>
-                    {pageData.showFields.map((item, index) => {
+                    {cacheData.showFields.map((item, index) => {
                         return (
                             <View key={index} style={styles.flowItem}>
                                 <Text style={styles.flowItemTitle}>{item.showName}</Text>
@@ -60,85 +83,30 @@ class FlowContentPage extends Component {
                         );
                     })}
                     <View style={styles.sectionHeader}>
-                        <Text>相关附件</Text>
+                        <Text>相关附件{cacheData.fileList.length}</Text>
                     </View>
-                    {pageData.fileList.map((item, index) => {
+                    {cacheData.fileList.map((item, index) => {
                         return (
-                            <View key={index} style={styles.fileItem}>
-                                <View style={styles.fileItemTitle}>
-                                    <Text>{item.name}</Text>
-                                </View>
-                                <View style={styles.fileItemBtn}>
-                                    
-                                </View>
-                            </View>
+                            <DownloadItem key={index} data={item} />
                         );
                     })}
                 </ScrollView>
                 <View style={styles.bottomBar}>
+                    {!!cacheData.actList.length && (
+                        <View style={styles.bottomBarButton}>
+                            <Button onPress={this.showAudit.bind(this)} text="我要审批"/>
+                        </View>
+                    )}
                     <View style={styles.bottomBarButton}>
-                        <Button onPress={this.doAudit.bind(this)} text="我要审批"/>
-                    </View>
-                    <View style={styles.bottomBarButton}>
-                        <Button text="查看审批意见"/>
+                        <Button onPress={this.goFlowApproveLogPage.bind(this)} text="查看审批意见"/>
                     </View>
                 </View>
-                {this.state.showAuditModal && (
-                    <Modal visible>
-                        <Header title="我要审批" rightButton={this.modalRightButton.bind(this)} />
-                        <ScrollView style={styles.modalBox}>
-                            <View>
-                                <Text>填写审批意见:</Text>
-                            </View>
-                            <TextInput
-                                multiline
-                                underlineColorAndroid="transparent"
-                                onChangeText={text => this.setState({ text })}
-                                value={this.state.text}
-                                style={styles.input}
-                                textAlignVertical="top"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="提交"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="加签"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="已阅"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="回退"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="当前会签"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="继续"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="终止"
-                            />
-                            <Button
-                                style={styles.button}
-                                text="转办"
-                            />
-                        </ScrollView>
-                    </Modal>
-                )}
             </View>
         );
     }
 }
 FlowContentPage.propTypes = {
-    pageData: PropTypes.object,
+    cacheData: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
@@ -161,6 +129,17 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 5,
     },
+    bottomBarMoreButtonBox: {
+        width: 70,
+        paddingLeft: 5,
+    },
+    bottomBarMoreButton: {
+        backgroundColor: '#eeeeee',
+        borderColor: '#bbbbbb',
+    },
+    bottomBarMoreButtonText: {
+        color: GlobalData.colors.fontStrong2,
+    },
     flowItem: {
         padding: 10,
         borderColor: GlobalData.colors.lineLight,
@@ -179,55 +158,15 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         backgroundColor: '#eeeeee',
     },
-    fileItem: {
-        padding: 10,
-        borderColor: GlobalData.colors.lineLight,
-        borderBottomWidth: 1 / PixelRatio.get(),
-        flexDirection: 'row',
-        height: 50,
-    },
-    fileItemTitle: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    fileItemBtn: {
-        backgroundColor: '#ff6600',
-        width: 50,
-    },
-    modalBox: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        padding: 10,
-        width: Dimensions.get('window').width,
-    },
-    input: {
-        marginTop: 5,
-        height: 80,
-        backgroundColor: '#fafafa',
-        textAlignVertical: 'top',
-        textAlign: 'left',
-        padding: 5,
-        borderColor: GlobalData.colors.lineLight,
-        borderWidth: 1 / PixelRatio.get(),
-    },
-    button: {
-        marginTop: 10,
-    },
-    modalRightButton: {
-        width: 30,
-        alignItems: 'flex-end',
-    },
 });
 
 export default connect(
     state => ({
+        cacheData: state.getIn(['pageData', pageConfig.flowContent.pageKey]) && state.getIn(['pageData', pageConfig.flowContent.pageKey]).toJS(),
         userData: state.get('userData'),
     })
 )(props => {
-    const pageConfigData = {
-        pageUrl: 'http://192.168.1.178:9012/home/GetCommonPeddingInstance?referFieldValue=213&tableName=FreeFlow_FreeTask&referFieldName=freeTaskId&userId=1',
-    };
     return (
-        <LoadView view={FlowContentPage} {...props} {...pageConfigData} />
+        <LoadView view={FlowContentPage} {...props} />
     );
 });

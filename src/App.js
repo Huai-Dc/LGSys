@@ -5,6 +5,7 @@ import {
     AsyncStorage,
     BackAndroid,
     NetInfo,
+    View,
 } from 'react-native';
 
 import { createStore, applyMiddleware } from 'redux';
@@ -35,12 +36,10 @@ class App extends Component {
         this.androidExit = this.androidExit.bind(this);
         AsyncStorage.getItem(GlobalData.STORAGE_UESER_KEY)
             .then(userData => {
-                const isLogin = !!(userData && JSON.parse(userData).id);
+                const isLogin = !!(userData && JSON.parse(userData).userId);
                 if (isLogin) {
-                    store.dispatch({
-                        type: actionTypes.updateUserData,
-                        payload: JSON.parse(userData),
-                    });
+                    GlobalData.user = JSON.parse(userData);
+                    GlobalData.server = GlobalData.user.url;
                 }
                 this.setState({
                     checkLogin: isLogin,
@@ -129,9 +128,13 @@ class App extends Component {
         return true;
     }
     render() {
+        if (this.state.checkLogin === undefined) {
+            return <View />;
+        }
+
         return (
             <Provider store={store}>
-                <Routes/>
+                <Routes isLogin={this.state.checkLogin} />
             </Provider>
         );
     }

@@ -12,7 +12,11 @@ import { Actions } from 'react-native-router-flux';
 import SwipeableViews from 'react-swipeable-views/lib/index.native.scroll.js';
 import Communications from 'react-native-communications';
 
-const Toast = ToastAndroid;
+const Toast = {
+    show(msg) {
+        ToastAndroid.show(msg, 900);
+    },
+};
 export {
     Actions,
     Modal,

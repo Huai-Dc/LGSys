@@ -8,6 +8,7 @@ import {
 import TimerMixin from 'react-timer-mixin';
 import { Toast } from './modules/adapter';
 const appVersion = 'V0';
+import RNFS from 'react-native-fs';
 
 const requestTimeout = 20000;
 
@@ -22,6 +23,7 @@ const Data = {
         isExpensive: false,
         isConnected: true,
     },
+    FilePath: Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath + '/files' : RNFS.ExternalDirectoryPath + '/files',
 
     headerbarHeight: Platform.OS === 'ios' ? 64 : 55,
 
@@ -36,6 +38,14 @@ const Data = {
         return this.userData;
     },
 
+    user: {
+        // userId: data.userId,
+        // name: data.name,
+        // server: this.props.companyData.url,
+        // logo: this.props.companyData.logo,
+    },
+    // server: this.props.companyData.url,
+    
     // 统一风格样式定义
     colors: {
         body: '#f3f3f3',
@@ -148,17 +158,31 @@ const Data = {
         });
     },
 
-    POST(url, pramas) {
+    POST(pUrl, pramas) {
+        let url, headers, data;
+        if (typeof pUrl === 'object') {
+            pramas = pUrl;
+            url = pramas.url;
+            headers = pramas.headers;
+            data = pramas.data;
+        } else {
+            data = pramas;
+            url = pUrl;
+        }
         return new Promise((resolve, reject) => {
             try {
                 const xhr = new XMLHttpRequest();
+                xhr.open('POST', url);
 
                 const formData = new FormData();
-                for (const key in pramas) {
-                    formData.append(String(key), String(pramas[key]));
+                for (const key in data) {
+                    formData.append(String(key), String(data[key]));
                 }
-
-                xhr.open('POST', url);
+                if (headers) {
+                    for (const key in headers) {
+                        xhr.setRequestHeader(key, headers[key]);
+                    }
+                }
                 xhr.onload = () => {
                     if (xhr.status === 200) {
                         resolve(JSON.parse(xhr.responseText));
@@ -166,6 +190,11 @@ const Data = {
                         reject(xhr.responseText);
                     }
                 };
+
+                console.log('ready to post data!!!');
+                console.log(url);
+                console.log(headers);
+                console.log(data);
                 xhr.send(formData);
             } catch (e) {
                 console.log(e);

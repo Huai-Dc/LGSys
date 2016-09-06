@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     },
     navBarRightButton: {
         padding: 10,
+        paddingRight: 0,
     },
     navBarText: {
         color: '#ffffff',

@@ -15,6 +15,12 @@ import SettingPage from './containers/SettingPage';
 import FlowContentPage from './containers/Flow/FlowContentPage';
 import FlowApproveLogPage from './containers/Flow/FlowApproveLogPage';
 import ProjectInfoPage from './containers/Project/ProjectInfoPage';
+import ProjectDetailPage from './containers/Project/ProjectDetailPage';
+import SelectUserPage from './containers/Flow/SelectUserPage';
+import SearchUserPage from './containers/Flow/SearchUserPage';
+import FlowAuditPage from './containers/Flow/FlowAuditPage';
+import CompanyIndex from './containers/CompanyIndex';
+import LoginPage from './containers/LoginPage';
 
 function TabIcon(props) {
     if (props.selected) {
@@ -63,6 +69,20 @@ const navBarConf = {
         );
     },
 };
+const barConf = {
+    navigationBarStyle: {
+        backgroundColor: GlobalData.colors.main,
+        borderBottomWidth: 0,
+        height: GlobalData.headerbarHeight,
+    },
+    renderTitle(props) {
+        return (
+            <View style={styles.title}>
+                <Text style={styles.titleStyle}>{props.title}</Text>
+            </View>
+        );
+    },
+}
 
 class Routes extends Component {
     constructor(props) {
@@ -71,18 +91,25 @@ class Routes extends Component {
     }
 
     render() {
+        console.log('this.props.isLogin', this.props.isLogin);
         return (
             <Router>
                 <Scene key="root">
-                    <Scene key="Main" type="replace" tabs tabBarStyle={styles.tabBarStyle}>
-                        <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="HomePage" component={CurrentFlowPage} title="待审流程" hideNavBar/>
-                        <Scene icon={TabIcon} iconName="ios-time-outline" iconActiveName="ios-time" key="HotNewsPage" component={HistoryFlowPage} title="相关流程" hideNavBar/>
-                        <Scene icon={TabIcon} iconName="ios-apps-outline" iconActiveName="ios-apps" key="NotePage" component={ProjectPage} title="项目" hideNavBar/>
-                        <Scene icon={TabIcon} iconName="ios-settings-outline" iconActiveName="ios-settings" key="UserPage" component={SettingPage} title="设置" hideNavBar/>
+                    <Scene initial={this.props.isLogin} key="Main" type="replace" tabs tabBarStyle={styles.tabBarStyle}>
+                        <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="CurrentFlowPage" component={CurrentFlowPage} title="待审流程" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-time-outline" iconActiveName="ios-time" key="HistoryFlowPage" component={HistoryFlowPage} title="相关流程" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-apps-outline" iconActiveName="ios-apps" key="NotePage" component={ProjectPage} title="项目" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-settings-outline" iconActiveName="ios-settings" key="SettingPage" component={SettingPage} title="设置" {...barConf} />
                     </Scene>
                     <Scene key="FlowContentPage" component={FlowContentPage} title="审批中心" {...navBarConf}/>
-                    <Scene initial key="ProjectInfoPage" component={ProjectInfoPage} title="项目" {...navBarConf}/>
+                    <Scene key="FlowAuditPage" component={FlowAuditPage} title="我要审批" {...navBarConf}/>
                     <Scene key="FlowApproveLogPage" component={FlowApproveLogPage} title="审批意见" {...navBarConf}/>
+                    <Scene key="ProjectInfoPage" component={ProjectInfoPage} title="项目内页" {...navBarConf}/>
+                    <Scene key="ProjectDetailPage" component={ProjectDetailPage} title="项目详情" {...navBarConf}/>
+                    <Scene key="SelectUserPage" component={SelectUserPage} title="人员选择" {...navBarConf}/>
+                    <Scene key="SearchUserPage" component={SearchUserPage} title="人员选择" {...navBarConf}/>
+                    <Scene initial={!this.props.isLogin} key="CompanyIndex" component={CompanyIndex} title="选择公司" {...navBarConf}/>
+                    <Scene key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
                 </Scene>
             </Router>
         );

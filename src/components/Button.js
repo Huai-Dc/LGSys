@@ -66,7 +66,7 @@ Button.defaultProps = {
 Button.propTypes = {
     text: PropTypes.string,
     style: PropTypes.any,
-    textStyle: PropTypes.object,
+    textStyle: PropTypes.any,
     underlayColor: PropTypes.string,
     disable: PropTypes.bool,
     pending: PropTypes.bool,

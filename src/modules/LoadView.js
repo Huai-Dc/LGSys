@@ -30,6 +30,13 @@ class LoadingView extends Component {
         this.webParams = {};
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.pageUrl !== nextProps.pageUrl) {
+            this.props = nextProps;
+            this.reloadPage(true);
+        }
+    }
+
     componentWillMount() {
         if (this.props.pageStorageKey) {
             AsyncStorage.getItem(this.props.pageStorageKey)

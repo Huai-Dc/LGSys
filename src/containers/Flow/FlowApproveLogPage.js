@@ -139,10 +139,7 @@ export default connect(
         userData: state.get('userData'),
     })
 )(props => {
-    const pageConfigData = {
-        pageUrl: 'http://192.168.1.178:9012/home/GetCommonApproveLog?flowInstanceId=3895',
-    };
     return (
-        <LoadView view={FlowApproveLogPage} {...props} {...pageConfigData} />
+        <LoadView view={FlowApproveLogPage} {...props} />
     );
 });

@@ -26,39 +26,57 @@ class ProjectInfoPage extends Component {
     constructor(props) {
         super(props);
     }
-
+    goProjectDetailPage(proj) {
+        Actions.ProjectDetailPage({
+            projId: proj.projId,
+            title: proj.name,
+        });
+    }
     render() {
         console.log(this.props.pageData);
         const { pageData } = this.props;
+        const sections = [];
+        for (let i = 0, len = pageData.projList.length; i < len; i += 2) {
+            const item1 = pageData.projList[i];
+            const item2 = pageData.projList[i + 1];
+            sections.push(
+                <View key={i} style={styles.section}>
+                    <TouchableHighlight onPress={this.goProjectDetailPage.bind(this, item1)} style={styles.sectionItem} underlayColor={GlobalData.colors.pressed} >
+                        <View style={styles.sectionItemBox}>
+                            <NetImage style={styles.sectionItemImage} url={item1.thumbPic} />
+                            <View style={styles.sectionItemInfo}>
+                                <Text style={styles.sectionItemName}>{item1.name}</Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                    {!!item2 && (
+                        <TouchableHighlight onPress={this.goProjectDetailPage.bind(this, item2)} style={styles.sectionItem} underlayColor={GlobalData.colors.pressed}>
+                            <View style={styles.sectionItemBox}>
+                                <NetImage style={styles.sectionItemImage} url={item2.thumbPic} />
+                                <View style={styles.sectionItemInfo}>
+                                    <Text style={styles.sectionItemName}>{item2.name}</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    )}
+                </View>
+            );
+        }
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.flex}>
-                    <View>
-                        <NetImage url={pageData.thumbPic} />
-                        <View>
-                            <Text>{pageData.name}</Text>
-                            <Text>总占地面积: {pageData.area}</Text>
-                            <Text>总建筑面积: {pageData.BuildArea}</Text>
-                            <Text>容积率: 住宅{pageData.volumeRate}%</Text>
+                    <View style={styles.header}>
+                        <View style={styles.headerTitle}>
+                            <NetImage url={pageData.thumbPic} style={styles.headerImage}/>
+                        </View>
+                        <View style={styles.headerInfo}>
+                            <Text style={styles.headerText}>总占地面积: {pageData.area}</Text>
+                            <Text style={styles.headerText}>总建筑面积: {pageData.BuildArea}</Text>
+                            <Text style={styles.headerText}>容积率: 住宅{pageData.volumeRate}%</Text>
                         </View>
                     </View>
-                    <View style={styles.flex}>
-                        {pageData.projList.map((item, index) => {
-                            return (
-                                <TouchableHighlight key={index} style={styles.item}>
-                                    <View>
-                                        <View style={styles.avatar}>
-                                            <NetImage url={item.thumbPic} />
-                                        </View>
-                                        <View style={styles.info}>
-                                            <View style={styles.actionInfo}>
-                                                <Text style={styles.actionType}>{item.name}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            );
-                        })}
+                    <View style={styles.sections}>
+                        {sections}
                     </View>
                 </ScrollView>
             </View>
@@ -77,11 +95,58 @@ const styles = StyleSheet.create({
     flex: {
         flex: 1,
     },
+    header: {
+        backgroundColor: '#eeeeee',
+        flexDirection: 'row',
+        padding: 10,
+    },
+    headerTitle: {
+        
+    },
+    headerImage: {
+        width: 80,
+        height: 60,
+    },
+    headerInfo: {
+        flex: 1,
+        marginLeft: 10,
+    },
+    headerText: {
+        marginBottom: 5,
+    },
+    sections: {
+    },
+    section: {
+        paddingTop: 10,
+        paddingRight: 10,
+        flexDirection: 'row',
+    },
+    sectionItem: {
+        flex: 1,
+        padding: 5,
+        borderColor: GlobalData.colors.lineLight,
+        borderWidth: 1 / PixelRatio.get(),
+        marginLeft: 10,
+    },
+    sectionItemBox: {
+        flexDirection: 'row',
+    },
+    sectionItemImage: {
+        height: 50,
+        width: 50,
+    },
+    sectionItemInfo: {
+        flex: 1,
+        justifyContent: 'center',
+        marginLeft: 5,
+    },
+    sectionItemName: {
+
+    },
     item: {
         width: Dimensions.get('window').width / 2 - 60,
         backgroundColor: '#ff6600',
     },
-
 });
 
 export default connect(
@@ -89,10 +154,7 @@ export default connect(
         userData: state.get('userData'),
     })
 )(props => {
-    const pageConfigData = {
-        pageUrl: 'http://192.168.1.178:9012/home/EngineerInfo?engId=32',
-    };
     return (
-        <LoadView view={ProjectInfoPage} {...props} {...pageConfigData} />
+        <LoadView view={ProjectInfoPage} {...props} />
     );
 });

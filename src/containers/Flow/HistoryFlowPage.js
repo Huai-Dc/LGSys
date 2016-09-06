@@ -2,42 +2,34 @@
  * Created by sujiexu on 16/8/17.
  */
 'use strict';
-//import React, {
-//    Component,
-//    StyleSheet,
-//    Text,
-//    View,
-//    TouchableOpacity,
-//} from 'react-native';
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-} from 'react-native';
+import React, { Component } from 'react';
 
-class HistoryFlowPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>HistoryFlowPage</Text>
-            </View>
-        );
-    }
-}
+import LoadView from '../../modules/LoadView';
+import pageConfig from '../../pageConfig';
+import { connect } from 'react-redux';
+import FlowListComponent from './FlowListComponent';
+import GlobalData from '../../GlobalData';
+import enumData from '../../enumData';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+export default connect(
+    state => ({
+        pageData: state.getIn(['pageData', pageConfig.flowData.historyFlowKey]) && state.getIn(['pageData', pageConfig.flowData.historyFlowKey]).toJS(),
+        userData: state.get('userData'),
+    })
+)(props => {
+    const pageUrl = GlobalData.addParams(GlobalData.user.server + pageConfig.flowData.pageUrl, {
+        type: enumData.flowType.historyFlow,
+        loginName: GlobalData.user.loginName,
+        current: 1,
+    });
+    console.log(pageUrl);
+    const pageConfigData = {
+        pageUrl,
+        pageKey: pageConfig.flowData.historyFlowKey,
+        flowType: enumData.flowType.historyFlow,
+    };
+    return (
+        <LoadView view={FlowListComponent} {...props} {...pageConfigData} />
+    );
 });
-
-export default HistoryFlowPage;
