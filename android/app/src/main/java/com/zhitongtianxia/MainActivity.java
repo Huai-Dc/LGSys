@@ -1,4 +1,4 @@
-package com.zhitongtianxia;
+package com.yinhootech.YinheMobileApp;
 
 import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;

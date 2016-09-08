@@ -72,9 +72,11 @@ class App extends Component {
     }
 
     handleConnectionInfoChange(connectionInfo) {
+        console.log('connectionInfo', connectionInfo);
         GlobalData.netInfo.connectionInfo = connectionInfo;
         if (Platform.OS === 'ios') {
             switch (connectionInfo.toLowerCase()) {
+                case 'unknown':
                 case 'wifi':
                     GlobalData.netInfo.isExpensive = false;
                     GlobalData.netInfo.isConnected = true;
@@ -115,7 +117,9 @@ class App extends Component {
         if (this.readyToExit) {
             return false;
         }
-        if (!Actions.pop()) {
+        try {
+            Actions.pop();
+        } catch (e) {
             const duration = 2000;
 
             this.readyToExit = true;
@@ -125,6 +129,16 @@ class App extends Component {
             GlobalData.toast('再按一次退出');
             return true;
         }
+        // if (!Actions.pop()) {
+        //     const duration = 2000;
+        //
+        //     this.readyToExit = true;
+        //     TimerMixin.setTimeout(() => {
+        //         this.readyToExit = false;
+        //     }, duration);
+        //     GlobalData.toast('再按一次退出');
+        //     return true;
+        // }
         return true;
     }
     render() {

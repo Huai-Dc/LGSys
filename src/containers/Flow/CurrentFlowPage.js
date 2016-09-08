@@ -19,8 +19,9 @@ export default connect(
 )(props => {
     const pageUrl = GlobalData.addParams(GlobalData.user.server + pageConfig.flowData.pageUrl, {
         type: enumData.flowType.currentFlow,
-        loginName: GlobalData.user.loginName,
+        userId: GlobalData.user.guid,
         current: 1,
+        pageSize: 15,
     });
     const pageConfigData = {
         pageUrl,

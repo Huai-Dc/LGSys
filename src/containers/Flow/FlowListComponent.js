@@ -81,8 +81,9 @@ class FlowListComponent extends Component {
 
         GlobalData.GET(GlobalData.user.server + pageConfig.flowData.pageUrl, {
             type: flowType,
-            loginName: GlobalData.user.loginName,
+            userId: GlobalData.user.guid,
             current: loadPageIndex,
+            pageSize: 15,
         }).then((data) => {
             console.log(loadPageIndex);
             if (!data.length) {
@@ -116,7 +117,7 @@ class FlowListComponent extends Component {
                 referFieldValue: rowData.referFieldValue,
                 tableName: rowData.tableName,
                 referFieldName: rowData.referFieldName,
-                userId: GlobalData.user.userId,
+                userId: GlobalData.user.guid,
             }),
         });
     }

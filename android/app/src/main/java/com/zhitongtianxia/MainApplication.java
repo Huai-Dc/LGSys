@@ -1,4 +1,4 @@
-package com.zhitongtianxia;
+package com.yinhootech.YinheMobileApp;
 
 import android.app.Application;
 import android.util.Log;

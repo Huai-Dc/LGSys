@@ -75,7 +75,7 @@ class ProjectPage extends Component {
     }
     handleSearch(keyword) {
         const pageData = [];
-        this.props.pageData.forEach(item => {
+        this.props.pageData.list.forEach(item => {
             const newItem = { ...item };
             newItem.engList = item.engList.filter(proj => proj.name.search(new RegExp(keyword, 'i')) >= 0);
             if (newItem.engList.length) {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     listSectionHeader: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#eee',
         height: 30,
         padding: 5,
         justifyContent: 'center',

@@ -108,7 +108,7 @@ class Routes extends Component {
                     <Scene key="ProjectDetailPage" component={ProjectDetailPage} title="项目详情" {...navBarConf}/>
                     <Scene key="SelectUserPage" component={SelectUserPage} title="人员选择" {...navBarConf}/>
                     <Scene key="SearchUserPage" component={SearchUserPage} title="人员选择" {...navBarConf}/>
-                    <Scene initial={!this.props.isLogin} key="CompanyIndex" component={CompanyIndex} title="选择公司" {...navBarConf}/>
+                    <Scene initial={!this.props.isLogin} key="CompanyIndex" component={CompanyIndex} title="选择公司" {...barConf}/>
                     <Scene key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
                 </Scene>
             </Router>
@@ -119,12 +119,12 @@ const styles = StyleSheet.create({
     backButtonBox: {
         flex: 1,
         alignSelf: 'flex-start',
-        marginTop: Platform.OS === 'ios' ? 10 : 0,
+        marginTop: Platform.OS === 'ios' ? 4 : 0,
     },
     backButton: {
         flex: 1,
         width: 30,
-        paddingLeft: 10,
+        paddingLeft: 0,
         justifyContent: 'center',
     },
     title: {

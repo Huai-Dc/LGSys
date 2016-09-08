@@ -30,7 +30,7 @@ export default {
         currentFlowKey: 'currentFlowKey',
         pageUrl: useStaticData ?
         serverDebug + 'appData/indexData.json' :
-        '/home/PeddingDesignChangeList',
+            '/home/GetApprovalList',
     },
     flowContent: {
         pageKey: 'flowContent',

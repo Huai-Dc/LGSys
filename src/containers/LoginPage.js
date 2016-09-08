@@ -37,6 +37,7 @@ class LoginPage extends Component {
         });
     }
     doLogin() {
+        if (this.state.userNameVal === '' || this.state.userPwdVal === '') return;
         this.setState({
             loading: true,
         });
@@ -47,6 +48,7 @@ class LoginPage extends Component {
             // passWord: 'MZA3zhengshi@flkl',
         }).then(data => {
             if (data.state === 1) {
+                Actions.pop();
                 console.log(data);
                 GlobalData.user = {
                     userId: data.userId,
@@ -54,6 +56,7 @@ class LoginPage extends Component {
                     loginName: data.loginName,
                     server: this.props.companyData.url,
                     logo: this.props.companyData.logo,
+                    guid: data.guid,
                 };
                 AsyncStorage.setItem(GlobalData.STORAGE_UESER_KEY, JSON.stringify(GlobalData.user)).then(() => {
                     Actions.Main({
@@ -85,20 +88,24 @@ class LoginPage extends Component {
                     <NetImage style={styles.logoImg} url={this.props.companyData.logo} />
                     <View style={styles.inputBorder}>
                         <TextInput
+                            autoFocus
                             underlineColorAndroid="transparent"
                             style={styles.input}
                             placeholder="请输入用户名"
                             ref="userNameInp"
                             onChangeText={this.setUserName.bind(this)}
+                            onEndEditing={() => { this.refs.userPwdInp.focus(); }}
                         />
                     </View>
                     <View style={styles.inputBorder}>
                         <TextInput
                             password
+                            ref="userPwdInp"
                             underlineColorAndroid="transparent"
                             style={styles.input}
                             placeholder="请输入密码"
                             onChangeText={this.setUserPwd.bind(this)}
+                            onEndEditing={this.doLogin.bind(this)}
                         />
                     </View>
                     <Button
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
         height: 120,
         marginTop: 20,
         marginBottom: 10,
-        resizeMode: Image.resizeMode.contain
+        resizeMode: Image.resizeMode.contain,
     },
     inputBorder: {
         marginTop: 10,
