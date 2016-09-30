@@ -9,14 +9,16 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
-import com.alipay.RNAlipayPackage;
 import com.rnfs.RNFSPackage;
 import com.fileopener.FileOpenerPackage;
+
+import com.liuchungui.react_native_umeng_push.UmengPushApplication;
+import com.liuchungui.react_native_umeng_push.UmengPushPackage;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends UmengPushApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -28,9 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNAlipayPackage(),
           new RNFSPackage(),
-          new FileOpenerPackage()
+          new FileOpenerPackage(),
+          new UmengPushPackage()
       );
     }
   };

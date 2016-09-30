@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
+
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
@@ -26,6 +27,13 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <meta-data
+                android:name="UMENG_APPKEY"
+                android:value="57ee0f76e0f55acb9e003128" >
+        </meta-data>
+        <meta-data
+                android:name="UMENG_MESSAGE_SECRET"
+                android:value="cc9f6161c30c61cbf45710b035f2077a" >
+        </meta-data>
     </application>
-
 </manifest>

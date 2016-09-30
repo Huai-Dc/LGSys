@@ -5,7 +5,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
 import com.remobile.toast.RCTToastPackage;
-import com.alipay.RNAlipayPackage;
+import com.liuchungui.react_native_umeng_push.UmengPushPackage;
 
 public class MainActivity extends ReactActivity {
 
