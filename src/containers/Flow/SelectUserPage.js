@@ -118,7 +118,7 @@ class SelectUserPage extends Component {
                 console.log(res);
                 Actions.popTo('FlowContentPage');
                 this.props.refreshFlowData();
-                Toast.show('操作成功');
+                // Toast.show('操作成功'); // 输入框问题
             } else {
                 Toast.show('操作失败');
                 this.setState({

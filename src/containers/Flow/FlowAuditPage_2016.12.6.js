@@ -39,17 +39,14 @@ class FlowAuditPage extends Component {
     doAction(action) {
         let url;
         let data;
-        const jumpStepId = action.returnStaticField && action.returnStaticField.jumpStepId;
         const { pageData } = this.props;
         const flowData = {
-            jumpStepId, // 回退步骤id
             flowId: pageData.flowId, // 流程ID
             flowInstanceId: pageData.flowInstanceId, // 流程实例ID
             stepId: pageData.stepId, // 当前步骤ID
             content: this.state.commentText, // 审批意见
             actId: action.actId, // 动作ID（取通过的actId）
         }
-        console.log('flowData', flowData);
         switch (action.type) {
             case 1:// 会签确认
                 url = '/Home/DoAction';

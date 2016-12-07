@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yinhootech.YinheMobileApp"
+    package="com.yinhootech.YinheMobileApp.xh"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -15,7 +15,7 @@
       android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
-      android:icon="@mipmap/icon"
+      android:icon="@mipmap/icon_xh"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"

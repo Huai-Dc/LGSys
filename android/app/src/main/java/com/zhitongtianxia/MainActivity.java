@@ -1,4 +1,4 @@
-package com.yinhootech.YinheMobileApp;
+package com.yinhootech.YinheMobileApp.xh;
 
 import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;

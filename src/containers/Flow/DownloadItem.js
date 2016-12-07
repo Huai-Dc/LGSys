@@ -50,7 +50,7 @@ class DownloadItem extends Component {
                 fileLoaded: e,
             });
         }, e => {
-            console.log('err:', e);
+            console.log('err111:', e);
         });
     }
     doDownload() {
@@ -75,10 +75,15 @@ class DownloadItem extends Component {
                 fileLoading: false,
             });
         }, (e) => {
-            console.log('err:', e);
+            console.log('err222:', e);
+            // This.setState({
+            //     progress: 0,
+            //     fileLoaded: false,
+            //     fileLoading: false,
+            // });
             This.setState({
-                progress: 0,
-                fileLoaded: false,
+                progress: 100,
+                fileLoaded: true,
                 fileLoading: false,
             });
         });

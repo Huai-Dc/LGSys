@@ -27,7 +27,9 @@ class SelectUserItemComponent extends Component {
 
         return shouldItemDataUpdate || shouldSelectedUserUpdate;
     }
-
+    getUser() {
+        console.log('get user!');
+    }
     render() {
         const { data } = this.props;
         console.log('data.userList', data.userList);
@@ -64,6 +66,13 @@ class SelectUserItemComponent extends Component {
                             </TouchableOpacity>
                         );
                     })
+                )}
+                {!!data.itemVisible && (
+                    <TouchableOpacity onPress={this.getUser.bind(this)}>
+                        <View style={styles.childItem}>
+                            <Text>选择指定人员</Text>
+                        </View>
+                    </TouchableOpacity>
                 )}
             </View>
         );

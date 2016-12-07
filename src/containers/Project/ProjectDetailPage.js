@@ -47,28 +47,28 @@ class ProjectDetailPage extends Component {
                     );
                 },
             },
-            {
-                title: '技术指标',
-                view() {
-                    const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectIndexSummary, {
-                        projId,
-                    })
-                    return (
-                        <ProjectInfoTpl2 pageUrl={url} />
-                    );
-                },
-            },
-            {
-                title: '设计单位',
-                view() {
-                    const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectDesigner, {
-                        projId,
-                    })
-                    return (
-                        <ProjectInfoTpl3 pageUrl={url} />
-                    );
-                },
-            },
+            // {
+            //     title: '技术指标',
+            //     view() {
+            //         const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectIndexSummary, {
+            //             projId,
+            //         })
+            //         return (
+            //             <ProjectInfoTpl2 pageUrl={url} />
+            //         );
+            //     },
+            // },
+            // {
+            //     title: '设计单位',
+            //     view() {
+            //         const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectDesigner, {
+            //             projId,
+            //         })
+            //         return (
+            //             <ProjectInfoTpl3 pageUrl={url} />
+            //         );
+            //     },
+            // },
         ];
         return (
             <View style={styles.container}>

@@ -50,7 +50,7 @@ class SettingPage extends Component {
     logout() {
         console.log('logout');
         AsyncStorage.removeItem(GlobalData.STORAGE_UESER_KEY).then(() => {
-            Actions.CompanyIndex({
+            Actions.LoginPage({
                 type: 'replace',
             });
             GlobalData.user = {};
@@ -61,10 +61,16 @@ class SettingPage extends Component {
     }
     getDeviceToken() {
         // 获取DeviceToken
+        //  <Button text="获取DeviceToken" onPress={this.getDeviceToken.bind(this)} />
         UmengPush.getDeviceToken(deviceToken => {
             console.log('deviceToken: ', deviceToken);
             alert('deviceToken: ' + deviceToken);
             alert(deviceToken);
+        });
+    }
+    goGetUser() {
+        Actions.GetUserForCountersignPage({
+            title: '选择加签人员',
         });
     }
     render() {
@@ -77,13 +83,14 @@ class SettingPage extends Component {
                     指通天下：高层人士由于工作需要，经常离开办公室，仍然需要掌握各种统计数据，才能够快捷的对需要决策的事情做出及时有效的判断。指通天下将采用特殊的公认机制，在确保数据安全的情况下，将公司经营决策的各种类数据进行合并与归类，推送到高层人士的手机端，协助高层人士对照数据做出各类流程的审批决策。
                 </Text>
                 <View style={styles.btnContainer}>
-                    <Button text="获取DeviceToken" onPress={this.getDeviceToken.bind(this)} />
                     <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
                     <Button
                         style={{ marginTop: 10 }}
                         onPress={this.logout.bind(this)}
                         text="退出当前账号"
                     />
+                    <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
+                    <Button text="搜索用户" onPress={this.goGetUser.bind(this)} />
                 </View>
             </View>
         );

@@ -21,6 +21,8 @@ import SearchUserPage from './containers/Flow/SearchUserPage';
 import FlowAuditPage from './containers/Flow/FlowAuditPage';
 import CompanyIndex from './containers/CompanyIndex';
 import LoginPage from './containers/LoginPage';
+import WebPage from './components/WebPage';
+import GetUserForCountersignPage from './containers/Flow/GetUserForCountersignPage';
 
 function TabIcon(props) {
     if (props.selected) {
@@ -97,19 +99,21 @@ class Routes extends Component {
                 <Scene key="root">
                     <Scene initial={this.props.isLogin} key="Main" type="replace" tabs tabBarStyle={styles.tabBarStyle}>
                         <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="CurrentFlowPage" component={CurrentFlowPage} title="待审流程" {...barConf} />
-                        <Scene icon={TabIcon} iconName="ios-time-outline" iconActiveName="ios-time" key="HistoryFlowPage" component={HistoryFlowPage} title="相关流程" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-time-outline" iconActiveName="ios-time" key="HistoryFlowPage" component={HistoryFlowPage} title="已审流程" {...barConf} />
                         <Scene icon={TabIcon} iconName="ios-apps-outline" iconActiveName="ios-apps" key="NotePage" component={ProjectPage} title="项目" {...barConf} />
                         <Scene icon={TabIcon} iconName="ios-settings-outline" iconActiveName="ios-settings" key="SettingPage" component={SettingPage} title="设置" {...barConf} />
                     </Scene>
                     <Scene key="FlowContentPage" component={FlowContentPage} title="审批中心" {...navBarConf}/>
+                    <Scene key="WebPage" component={WebPage} title="网页" {...navBarConf}/>
                     <Scene key="FlowAuditPage" component={FlowAuditPage} title="我要审批" {...navBarConf}/>
                     <Scene key="FlowApproveLogPage" component={FlowApproveLogPage} title="审批意见" {...navBarConf}/>
                     <Scene key="ProjectInfoPage" component={ProjectInfoPage} title="项目内页" {...navBarConf}/>
                     <Scene key="ProjectDetailPage" component={ProjectDetailPage} title="项目详情" {...navBarConf}/>
                     <Scene key="SelectUserPage" component={SelectUserPage} title="人员选择" {...navBarConf}/>
                     <Scene key="SearchUserPage" component={SearchUserPage} title="人员选择" {...navBarConf}/>
-                    <Scene initial={!this.props.isLogin} key="CompanyIndex" component={CompanyIndex} title="选择公司" {...barConf}/>
-                    <Scene key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
+                    <Scene key="CompanyIndex" component={CompanyIndex} title="选择公司" {...barConf}/>
+                    <Scene key="GetUserForCountersignPage" component={GetUserForCountersignPage} title="选择人员" {...navBarConf}/>
+                    <Scene initial={!this.props.isLogin} key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
                 </Scene>
             </Router>
         );

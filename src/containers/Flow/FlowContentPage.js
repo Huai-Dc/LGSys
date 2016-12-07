@@ -68,13 +68,23 @@ class FlowContentPage extends Component {
             pageUrl,
         });
     }
+    showTable(item) {
+        console.log(item);
+        console.log('this.props:::', GlobalData.user);
+        const tableUrl = GlobalData.user.server + decodeURIComponent(item.url) + '&uid=' + GlobalData.user.guid;
+        console.log('tableUrl', tableUrl);
+        Actions.WebPage({
+            title: item.name,
+            url: tableUrl,
+        });
+    }
     render() {
         // console.log(this.props.pageData);
         const { cacheData } = this.props;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.flex}>
-                    {cacheData.showFields.map((item, index) => {
+                    {!!cacheData.showFields && !!cacheData.showFields.length && cacheData.showFields.map((item, index) => {
                         return (
                             <View key={index} style={styles.flowItem}>
                                 <Text style={styles.flowItemTitle}>{item.showName}</Text>
@@ -82,14 +92,37 @@ class FlowContentPage extends Component {
                             </View>
                         );
                     })}
-                    <View style={styles.sectionHeader}>
-                        <Text>相关附件{cacheData.fileList.length}</Text>
-                    </View>
-                    {cacheData.fileList.map((item, index) => {
-                        return (
-                            <DownloadItem key={index} data={item} />
-                        );
-                    })}
+                    {!!cacheData.fileList && !!cacheData.fileList.length && (
+                        <View>
+                            <View style={styles.sectionHeader}>
+                                <Text>相关附件</Text>
+                            </View>
+                            {cacheData.fileList.map((item, index) => {
+                                return (
+                                    <DownloadItem key={index} data={item} />
+                                );
+                            })}
+                        </View>
+                    )}
+                    {!!cacheData.formList && !!cacheData.formList.length && (
+                        <View>
+                            <View style={styles.sectionHeader}>
+                                <Text>相关表单</Text>
+                            </View>
+                            <View>
+                                {cacheData.formList.map((item, index) => {
+                                    return (
+                                        <TouchableOpacity
+                                            key={index}
+                                            style={styles.showTable}
+                                            onPress={this.showTable.bind(this, item)}>
+                                            <Text>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                        </View>
+                    )}
                 </ScrollView>
                 <View style={styles.bottomBar}>
                     {!!cacheData.actList.length && (
@@ -157,6 +190,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: '#eeeeee',
+    },
+    showTable: {
+        padding: 10,
+        borderColor: GlobalData.colors.lineLight,
+        borderBottomWidth: 1 / PixelRatio.get(),
     },
 });
 

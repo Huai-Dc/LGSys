@@ -34,13 +34,14 @@ class ProjectInfoTpl1 extends Component {
                 </View>
             );
         }
+        console.log('pageData.imgList', pageData.imgList);
         return (
             <ScrollView style={styles.container}>
                 <SwipeableView style={styles.swiperBanner}>
-                    {!!pageData.imgList && pageData.imgList.map((item, index) => {
+                    {!!pageData.imgList && !!pageData.imgList.length && pageData.imgList.map((item, index) => {
                         return (
                             <View key={index}>
-                                <NetImage src="{item.src}" style={styles.swiperBanner} />
+                                <NetImage url={item.src} style={styles.swiperBanner} />
                             </View>
                         );
                     })}

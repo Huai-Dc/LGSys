@@ -11,10 +11,11 @@ import {
     Image,
     AsyncStorage,
 } from 'react-native';
-import NetImage from '../components/NetImage';
 import Button from '../components/Button';
+import pageConfig from '../pageConfig';
 import GlobalData from '../GlobalData';
 import { Actions, Toast } from '../modules/adapter';
+import { xhLogo } from '../assets/assets';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -41,21 +42,22 @@ class LoginPage extends Component {
         this.setState({
             loading: true,
         });
-        GlobalData.POST(this.props.companyData.url + '/Account/AjaxMobileLogin', {
+        GlobalData.POST(pageConfig.companyServer + '/Account/AjaxMobileLogin', {
             userName: this.state.userNameVal,
             passWord: this.state.userPwdVal,
             // userName: 'admin',
             // passWord: 'MZA3zhengshi@flkl',
         }).then(data => {
             if (data.state === 1) {
-                Actions.pop();
+                // Actions.pop();
                 console.log(data);
                 GlobalData.user = {
                     userId: data.userId,
                     name: data.name,
                     loginName: data.loginName,
-                    server: this.props.companyData.url,
-                    logo: this.props.companyData.logo,
+                    // server: this.props.companyData.url,
+                    // logo: this.props.companyData.logo,
+                    server: pageConfig.companyServer,
                     guid: data.guid,
                 };
                 AsyncStorage.setItem(GlobalData.STORAGE_UESER_KEY, JSON.stringify(GlobalData.user)).then(() => {
@@ -85,7 +87,7 @@ class LoginPage extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <NetImage style={styles.logoImg} url={this.props.companyData.logo} />
+                    <Image style={styles.logoImg} source={xhLogo} />
                     <View style={styles.inputBorder}>
                         <TextInput
                             autoFocus
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10,
         resizeMode: Image.resizeMode.contain,
+        backgroundColor: 'transparent',
     },
     inputBorder: {
         marginTop: 10,

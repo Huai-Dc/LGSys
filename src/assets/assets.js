@@ -1,4 +1,5 @@
 const logo = require('./images/logo.png');
+const xhLogo = require('./images/xh.jpg');
 const noPic = require('./images/noPic.png');
 const avatar = require('./images/avatar.png');
 const zttxLogo = require('./images/zttxLogo.png');
@@ -8,4 +9,5 @@ export {
     noPic,
     avatar,
     zttxLogo,
+    xhLogo,
 };

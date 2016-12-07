@@ -65,16 +65,6 @@ class ProjectInfoPage extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.flex}>
-                    <View style={styles.header}>
-                        <View style={styles.headerTitle}>
-                            <NetImage url={pageData.thumbPic} style={styles.headerImage}/>
-                        </View>
-                        <View style={styles.headerInfo}>
-                            <Text style={styles.headerText}>总占地面积: {pageData.area}</Text>
-                            <Text style={styles.headerText}>总建筑面积: {pageData.BuildArea}</Text>
-                            <Text style={styles.headerText}>容积率: 住宅{pageData.volumeRate}%</Text>
-                        </View>
-                    </View>
                     <View style={styles.sections}>
                         {sections}
                     </View>
@@ -86,6 +76,17 @@ class ProjectInfoPage extends Component {
 ProjectInfoPage.propTypes = {
     pageData: PropTypes.object,
 };
+
+// <View style={styles.header}>
+//     <View style={styles.headerTitle}>
+//         <NetImage url={pageData.thumbPic} style={styles.headerImage}/>
+//     </View>
+//     <View style={styles.headerInfo}>
+//         <Text style={styles.headerText}>总占地面积: {pageData.area}</Text>
+//         <Text style={styles.headerText}>总建筑面积: {pageData.BuildArea}</Text>
+//         <Text style={styles.headerText}>容积率: 住宅{pageData.volumeRate}%</Text>
+//     </View>
+// </View>
 
 const styles = StyleSheet.create({
     container: {

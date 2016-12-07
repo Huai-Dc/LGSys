@@ -25,7 +25,7 @@ class LoadingView extends Component {
             pageData: props.pageData,
             isConnected: true,
             error: false,
-            timedout: false,
+            timeout: false,
         };
         this.webParams = {};
     }
@@ -58,11 +58,14 @@ class LoadingView extends Component {
         } else {
             this.loadPage();
         }
-        TimerMixin.setTimeout(() => {
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
             this.setState({
-                timedout: true,
+                timeout: true,
             });
-        }, 630);
+        }, 600);
     }
 
     loadPage() {
@@ -87,28 +90,28 @@ class LoadingView extends Component {
                                 console.log('tips catched!!!!!');
                             });
                     }
-                    resolve(data)
                     this.setState({
                         loading: false,
                         pageData: data,
                         isConnected: true,
                         error: false,
                     });
+                    resolve(data);
                 }, err => {
-                    reject(err);
                     this.setState({
                         error: true,
                         errorData: err,
                         loading: false,
                     });
+                    reject(err);
                 });
             } else {
-                reject({ error: true, code: 0, message: '无网络连接' })
                 this.setState({
                     isConnected: false,
                     errorData: { error: true, code: 0, message: '无网络连接' },
                     loading: false,
                 });
+                reject({ error: true, code: 0, message: '无网络连接' });
             }
         });
     }
@@ -123,7 +126,7 @@ class LoadingView extends Component {
     }
 
     render() {
-        if (this.state.loading || !this.state.timedout) {
+        if (this.state.loading || !this.state.timeout) {
             return (
                 <Loading />
             );
