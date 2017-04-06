@@ -54,6 +54,7 @@ class ProjectPage extends Component {
         Actions.ProjectInfoPage({
             pageUrl: GlobalData.addParams(GlobalData.user.server + pageConfig.projectInfoPageUrl, {
                 engId: rowData.engId,
+                userId: GlobalData.user.guid,
             }),
             title: rowData.name,
         });
@@ -187,7 +188,9 @@ export default connect(
     })
 )(props => {
     const pageConfigData = {
-        pageUrl: GlobalData.user.server + pageConfig.projectData.pageUrl,
+        pageUrl: GlobalData.addParams(GlobalData.user.server + pageConfig.projectData.pageUrl, {
+            userId: GlobalData.user.guid,
+        }),
         pageKey: pageConfig.projectData.pageKey,
     };
     return (

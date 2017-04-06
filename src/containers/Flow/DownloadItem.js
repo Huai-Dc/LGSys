@@ -91,7 +91,7 @@ class DownloadItem extends Component {
     openFile() {
         FileOpener.open(
             this.sampleFilePath,
-            mimeType[this.props.data.ext.replace('.', '')]
+            mimeType[this.props.data.ext.replace('.', '').toLowerCase()]
         ).then(() => {
             console.log('flie open success!!');
         }, e => {

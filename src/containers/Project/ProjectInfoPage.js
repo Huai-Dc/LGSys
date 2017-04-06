@@ -38,6 +38,7 @@ class ProjectInfoPage extends Component {
         const sections = [];
         for (let i = 0, len = pageData.projList.length; i < len; i += 2) {
             const item1 = pageData.projList[i];
+            console.log(item1);
             const item2 = pageData.projList[i + 1];
             sections.push(
                 <View key={i} style={styles.section}>
@@ -59,6 +60,13 @@ class ProjectInfoPage extends Component {
                             </View>
                         </TouchableHighlight>
                     )}
+                </View>
+            );
+        }
+        if (!sections.length) {
+            return (
+                <View style={styles.center}>
+                    <Text>暂无分期</Text>
                 </View>
             );
         }
@@ -92,6 +100,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: GlobalData.headerbarHeight,
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     flex: {
         flex: 1,

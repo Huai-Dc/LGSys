@@ -20,8 +20,10 @@ import RNFS from 'react-native-fs';
 import { Actions, Toast } from '../modules/adapter';
 import { clearPageData } from '../actions/pageData.action';
 import { connect } from 'react-redux';
-import { zttxLogo } from '../assets/assets';
+import { xhLogo1 } from '../assets/assets';
 import UmengPush from 'react-native-umeng-push';
+import InputOfSetPassword from './../components/InputOfSetPassword';
+import pageConfig from '../pageConfig';
 
 class SettingPage extends Component {
     constructor(props) {
@@ -34,7 +36,7 @@ class SettingPage extends Component {
             Toast.show('缓存清除成功!');
         }, e => {
             console.log('clear err', e);
-            Toast.show('缓存清除出错!');
+            Toast.show('暂无缓存文件!');
         });
     }
     clearCache() {
@@ -69,33 +71,58 @@ class SettingPage extends Component {
         });
     }
     goGetUser() {
-        Actions.GetUserForCountersignPage({
-            title: '选择加签人员',
+        Actions.NotifyPage({
+            title: '选择人员',
         });
     }
+
+    onPasswordChange(passwordData) {
+        console.log('password passwordData', passwordData);
+
+        GlobalData.POST(GlobalData.user.server + pageConfig.changeUserPwdData, {
+            newPwd: passwordData.newPassword,
+            oldPwd: passwordData.oldPassword,
+            userId: GlobalData.user.guid,
+        }).then((data) => {
+            if (data.Success) {
+                Alert.alert('提示', '修改成功');
+            } else {
+                Alert.alert('提示', data.Message);
+            }
+        }, (data) => {
+            Alert.alert('提示', data.Message);
+            console.log(data.message);
+        });
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.logoBox}>
-                    <Image source={zttxLogo} style={styles.logo} />
+                    <Image source={xhLogo1} style={styles.logo} />
                 </View>
                 <Text style={styles.p20}>
-                    指通天下：高层人士由于工作需要，经常离开办公室，仍然需要掌握各种统计数据，才能够快捷的对需要决策的事情做出及时有效的判断。指通天下将采用特殊的公认机制，在确保数据安全的情况下，将公司经营决策的各种类数据进行合并与归类，推送到高层人士的手机端，协助高层人士对照数据做出各类流程的审批决策。
+                    旭辉设计系统
                 </Text>
                 <View style={styles.btnContainer}>
                     <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
+                    <View style={{ marginTop: 10 }}>
+                        <InputOfSetPassword onFinish={this.onPasswordChange.bind(this)} />
+                    </View>
                     <Button
                         style={{ marginTop: 10 }}
                         onPress={this.logout.bind(this)}
                         text="退出当前账号"
                     />
-                    <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
-                    <Button text="搜索用户" onPress={this.goGetUser.bind(this)} />
                 </View>
             </View>
         );
     }
 }
+
+// <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
+// <Button text="搜索用户" onPress={this.goGetUser.bind(this)} />
+
 
 const styles = StyleSheet.create({
     container: {
@@ -113,6 +140,7 @@ const styles = StyleSheet.create({
     },
     p20: {
         padding: 20,
+        textAlign: 'center',
     },
     btnContainer: {
         padding: 20,

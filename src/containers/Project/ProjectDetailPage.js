@@ -30,7 +30,9 @@ class ProjectDetailPage extends Component {
                 view() {
                     const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectSummaryUrl, {
                         projId,
-                    })
+                        userId: GlobalData.user.guid,
+                    });
+                    console.log(url)
                     return (
                         <ProjectInfoTpl1 pageUrl={url} />
                     );
@@ -41,6 +43,7 @@ class ProjectDetailPage extends Component {
                 view() {
                     const url = GlobalData.addParams(GlobalData.user.server + pageConfig.projectIntroduce, {
                         projId,
+                        userId: GlobalData.user.guid,
                     })
                     return (
                         <ProjectInfoTpl2 pageUrl={url} />

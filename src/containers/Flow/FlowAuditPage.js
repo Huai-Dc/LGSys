@@ -1,5 +1,6 @@
 /**
  * Created by sujiexu on 16/8/27.
+ * 我要审批页面
  */
 'use strict';
 import React, { Component } from 'react';
@@ -8,6 +9,7 @@ import {
     StyleSheet,
     Text,
     View,
+    ScrollView,
     TouchableOpacity,
     TextInput,
     Dimensions,
@@ -91,11 +93,11 @@ class FlowAuditPage extends Component {
                 return;
             case 6: // 阅读完毕确认
 
-                url = '/Home/CirculateComplete/' + $scope.item.flowInstanceId;
+                url = '/Home/CirculateComplete/' + flowData.flowInstanceId;
                 data = {
-                    // flowId: $scope.item.flowId, // '<%=flowId %>',
-                    // remark: $scope.item.remark, // remark,
-                    // stepId: $scope.item.stepId // stepId
+                    flowId: pageData.flowId, // '<%=flowId %>',
+                    remark: this.state.commentText, // remark,
+                    stepId: pageData.stepId, // stepId
                 }
                 break;
             case 7: // 终止
@@ -203,11 +205,18 @@ class FlowAuditPage extends Component {
             actId: action.actId, // 动作ID（取通过的actId）
         }
 
+        let alertText = '';
         switch (action.type) {
+            case 12: // 回退
+                alertText = ',流程将返回给上一级操作';
+                break;
+            case 3: //  驳回
+                alertText = ',流程将返回给发起人操作'
+                break;
             case 5: // 交办/转办
                 // $state.go('eventmenu.transmit',{flowInstanceId: $scope.item.flowInstanceId, flowId:$scope.item.flowId})
                 // $scope.modal.hide();
-                console.log(data);
+                //console.log(data);
                 url = GlobalData.user.server + '/Home/TurnOnToUser/' + flowData.flowInstanceId
                 Actions.SearchUserPage({
                     auditData: { ...flowData, url },
@@ -238,6 +247,19 @@ class FlowAuditPage extends Component {
                     auditData: data,
                 })
                 return;
+            case 13: // 知会
+                url = GlobalData.user.server + '/Home/CirculateToUser/' + flowData.flowInstanceId;
+                data = {
+                    ...flowData,
+                    url,
+                    typeName: '知会',
+                }
+                console.log(data);
+                Actions.NotifyPage({
+                    title: '选择知会人员',
+                    auditData: data,
+                })
+                return;
         }
 
         if (nextActions) {
@@ -258,7 +280,7 @@ class FlowAuditPage extends Component {
         } else {
             Alert.alert(
                 '请确认审批操作',
-                `您选择的审批操作为"${action.name}"`,
+                `您选择的审批操作为"${action.name}"` + alertText,
                 [
                     { text: '确认', onPress: this.doAction.bind(this, action) },
                     { text: '取消', onPress: () => console.log('OK Pressed!') },
@@ -276,7 +298,7 @@ class FlowAuditPage extends Component {
                         <Loading color="#ffffff" />
                     </Modal>
                 )}
-                <View style={styles.modalContainer}>
+                <ScrollView style={styles.modalContainer}>
                     <View>
                         <Text>填写审批意见:</Text>
                     </View>
@@ -304,7 +326,7 @@ class FlowAuditPage extends Component {
                             </View>
                         </TouchableOpacity>
                     )}
-                </View>
+                </ScrollView>
                 <View style={styles.bottomBar}>
                     {!!pageData.actList[0] && (
                         <View style={styles.bottomBarButton}>
@@ -388,6 +410,7 @@ const styles = StyleSheet.create({
         padding: 10,
         position: 'relative',
         flex: 1,
+        height: Dimensions.get('window').height - 120,
     },
     moreActionButtonsBox: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -396,6 +419,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+        height: Dimensions.get('window').height - 120,
         flex: 1,
     },
     ButtonsBox: {

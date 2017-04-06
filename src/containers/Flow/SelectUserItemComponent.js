@@ -10,15 +10,21 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     PixelRatio,
+    Dimensions,
 } from 'react-native';
 
-import { Actions, FontAwesome, Ionicons } from '../../modules/adapter';
+import { Actions, FontAwesome, Ionicons, Modal } from '../../modules/adapter';
 import GlobalData from '../../GlobalData';
+import SearchUserComponent from './SearchUserComponent';
+import Header from '../../components/Header';
 
 class SelectUserItemComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            userSelectModal: false,
+            addedUser: [],
+        };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -29,6 +35,34 @@ class SelectUserItemComponent extends Component {
     }
     getUser() {
         console.log('get user!');
+        this.props.getUser();
+    }
+    modalRightButton() {
+        return (
+            <TouchableOpacity
+                style={styles.modalRightButton}
+                onPress={() => { this.setState({ showModal: false, userSelectModal: false, transmitContent: '' }); }}>
+                <Ionicons name="md-close" size={24} color="#ffffff"/>
+            </TouchableOpacity>
+        );
+    }
+    getUser(){
+        this.setState({
+            userSelectModal: !this.state.userSelectModal,
+        });
+    }
+    onUserSelected(selectedUser) {
+        console.log('selectedUser', selectedUser);
+        this.setState({
+            addedUser: [...this.state.addedUser, selectedUser],
+            userSelectModal: false,
+        });
+        this.props.selectUser({
+            name: selectedUser.userName,
+            userId: selectedUser.userId,
+            department: this.props.data.name,
+            flowPosId: this.props.data.flowPosId,
+        });
     }
     render() {
         const { data } = this.props;
@@ -53,7 +87,7 @@ class SelectUserItemComponent extends Component {
                 {!!data.itemVisible && !!data.userList.length && (
                     data.userList.map((itemData, index) => {
                         return (
-                            <TouchableOpacity key={index} onPress={this.props.selectUser.bind(null, { ...itemData, department: data.name, flowPosId: data.flowPosId })}>
+                            <TouchableOpacity key={index} onPress={this.props.selectUser.bind(null, { name: itemData.userName, userId: itemData.userId, department: data.name, flowPosId: data.flowPosId })}>
                                 <View style={styles.childItem}>
                                     <View style={styles.action}>
                                         {console.log('hhxixi', !this.props.selectedUser[itemData.userId])}
@@ -67,12 +101,39 @@ class SelectUserItemComponent extends Component {
                         );
                     })
                 )}
+                {!!data.itemVisible && !!this.state.addedUser && !!this.state.addedUser.length && (
+                    this.state.addedUser.map((itemData, index) => {
+                        return (
+                            <TouchableOpacity key={index} onPress={this.props.selectUser.bind(null, { ...itemData, department: data.name, flowPosId: data.flowPosId })}>
+                                <View style={styles.childItem}>
+                                    <View style={styles.action}>
+                                        {console.log('hhxixi', !this.props.selectedUser[itemData.userId])}
+                                        {!this.props.selectedUser[itemData.userId] ? <Ionicons name="ios-checkbox-outline" size={20} color="#ccc" /> : <Ionicons name="ios-checkbox" size={20} color={GlobalData.colors.main} />}
+                                    </View>
+                                    <View style={styles.title}>
+                                        <Text style={styles.titleText}>{itemData.userName}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    })
+                )}
                 {!!data.itemVisible && (
                     <TouchableOpacity onPress={this.getUser.bind(this)}>
                         <View style={styles.childItem}>
-                            <Text>选择指定人员</Text>
+                            <View style={styles.title}>
+                                <Text style={{ marginLeft: 10 }}>选择指定人员</Text>
+                            </View>
                         </View>
                     </TouchableOpacity>
+                )}
+                {!!this.state.userSelectModal && (
+                    <Modal visible>
+                        <Header title="搜索人员" rightButton={this.modalRightButton.bind(this)} />
+                        <View style={styles.modalBox}>
+                            <SearchUserComponent onSelected={this.onUserSelected.bind(this)} />
+                        </View>
+                    </Modal>
                 )}
             </View>
         );
@@ -126,6 +187,15 @@ const styles = StyleSheet.create({
         width: 40,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    modalBox: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+        width: Dimensions.get('window').width,
+    },
+    modalRightButton: {
+        paddingRight: 10,
+        width: 30,
     },
 });
 

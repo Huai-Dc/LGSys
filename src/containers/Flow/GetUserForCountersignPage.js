@@ -36,7 +36,7 @@ class GetUserForCountersignPage extends Component {
             </TouchableOpacity>
         );
     }
-    showModal(){
+    showModal() {
         this.setState({
             userSelectModal: !this.state.userSelectModal,
         });

@@ -23,7 +23,7 @@ const Data = {
         isExpensive: false,
         isConnected: true,
     },
-    FilePath: Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath + '/files' : RNFS.ExternalDirectoryPath + '/files',
+    FilePath: Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath + '/ZTTX_files' : RNFS.ExternalStorageDirectoryPath + '/ZTTX_files',
 
     headerbarHeight: Platform.OS === 'ios' ? 64 : 55,
 
@@ -159,6 +159,7 @@ const Data = {
     },
 
     POST(pUrl, pramas) {
+        console.log('postPramas', pramas);
         let url, headers, data;
         if (typeof pUrl === 'object') {
             pramas = pUrl;

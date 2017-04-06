@@ -2,9 +2,11 @@
 const useStaticData = false;
 const serverDebug = 'http://192.168.1.19:8000/';
 const serverRelease = 'http://192.168.1.178:9012/';
-const companyServer = 'http://59.61.72.34:19029/';
-//const companyServer = 'http://192.168.1.25:8030/';
-//const serverRelease = 'http://192.168.1.122:8050/';
+const companyServer = 'http://des.cifi.com.cn:8033/';
+// const companyServer = 'http://59.61.72.36:8033/'; // 正式
+// const companyServer = 'http://59.61.72.34:19029/'; // 测试
+// const companyServer = 'http://192.168.1.25:8030/';
+// const serverRelease = 'http://192.168.1.122:8050/';
 const appVersion = 'V0';
 
 export default {
@@ -38,11 +40,12 @@ export default {
         pageKey: 'flowContent',
         pageUrl: '/home/GetCommonPeddingInstance',
     },
-    commonApproveLogUrl: '/home/GetCommonApproveLog',
+    commonApproveLogUrl: '/home/GetApproveLog',
     SelectUserPage: {
         pageKey: 'SelectUserPage',
         pageUrl: useStaticData ?
         serverDebug + 'appData/indexData.json' :
         '/home/CityEngList',
     },
+    changeUserPwdData: '/home/ChangeAppUserPwd',
 };

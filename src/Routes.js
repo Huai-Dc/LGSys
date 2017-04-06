@@ -23,6 +23,7 @@ import CompanyIndex from './containers/CompanyIndex';
 import LoginPage from './containers/LoginPage';
 import WebPage from './components/WebPage';
 import GetUserForCountersignPage from './containers/Flow/GetUserForCountersignPage';
+import NotifyPage from './containers/Flow/NotifyPage';
 
 function TabIcon(props) {
     if (props.selected) {
@@ -113,6 +114,7 @@ class Routes extends Component {
                     <Scene key="SearchUserPage" component={SearchUserPage} title="人员选择" {...navBarConf}/>
                     <Scene key="CompanyIndex" component={CompanyIndex} title="选择公司" {...barConf}/>
                     <Scene key="GetUserForCountersignPage" component={GetUserForCountersignPage} title="选择人员" {...navBarConf}/>
+                    <Scene key="NotifyPage" component={NotifyPage} title="选择知会人员" {...navBarConf}/>
                     <Scene initial={!this.props.isLogin} key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
                 </Scene>
             </Router>

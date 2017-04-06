@@ -1,5 +1,6 @@
 /**
  * Created by sujiexu on 16/8/19.
+ * 审批意见页
  */
 'use strict';
 import React, {Component, PropTypes} from 'react';

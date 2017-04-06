@@ -21,6 +21,7 @@ import GlobalData from '../../GlobalData';
 import { Ionicons, Toast, Modal, Actions } from '../../modules/adapter';
 import { refreshFlowData } from '../../actions/pageData.action';
 import { connect } from 'react-redux';
+import SearchUserComponent from './SearchUserComponent';
 
 class SearchUserPage extends Component {
     constructor(props) {
@@ -118,41 +119,7 @@ class SearchUserPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View>
-                    <View style={styles.searchBar}>
-                        <TextInput
-                            onChangeText={this.handleKeywordChange.bind(this)}
-                            onSubmitEditing={this.handleSearch.bind(this)}
-                            style={styles.searchInput}
-                            placeholder="输入搜索人员姓名"
-                            value={this.state.keyword}
-                        />
-                        <Button
-                            disable={this.state.keyword === ''}
-                            onPress={this.handleSearch.bind(this)}
-                            style={styles.searchBtn}
-                            text="搜索"
-                        />
-                    </View>
-                    <ScrollView style={styles.items}>
-                        {this.state.loading && (
-                            <Loading />
-                        )}
-                        {!!this.state.users.length && this.state.users.map((user, index) => {
-                            return (
-                                <TouchableOpacity
-                                    key={index}
-                                    style={styles.itemBtn}
-                                    onPress={this.chooseUser.bind(this, user)}>
-                                    <View style={styles.item}>
-                                        <Ionicons name="ios-checkmark-circle-outline" style={styles.icon} size={30} color="#ccc" />
-                                        <Text style={styles.userName}>{user.userName}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            );
-                        })}
-                    </ScrollView>
-                </View>
+                <SearchUserComponent onSelected={this.chooseUser.bind(this)} />
                 {this.state.showModal && (
                     <Modal visible>
                         <Header title="填写转办意见" rightButton={this.modalRightButton.bind(this)} />
