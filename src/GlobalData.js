@@ -159,6 +159,7 @@ const Data = {
     },
 
     POST(pUrl, pramas) {
+
         console.log('postPramas', pramas);
         let url, headers, data;
         if (typeof pUrl === 'object') {
@@ -190,6 +191,7 @@ const Data = {
                     } else {
                         reject(xhr.responseText);
                     }
+                    console.log(xhr.responseText);
                 };
 
                 console.log('ready to post data!!!');

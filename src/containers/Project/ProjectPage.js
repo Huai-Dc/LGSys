@@ -40,7 +40,7 @@ class ProjectPage extends Component {
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
         });
     }
-
+    // 城市
     renderSectionHeader(rowData) {
         return (
             <View style={styles.listSectionHeader}>
@@ -59,7 +59,7 @@ class ProjectPage extends Component {
             title: rowData.name,
         });
     }
-
+    // 项目
     renderRow(rowData) {
         return (
             <TouchableHighlight

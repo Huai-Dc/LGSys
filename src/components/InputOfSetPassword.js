@@ -44,6 +44,7 @@ class InputOfSetPassword extends Component {
     }
     onFinish() {
         if (typeof this.props.onFinish === 'function') {
+            console.log(this);
             this.props.onFinish({
                 newPassword: this.state.newVal,
                 oldPassword: this.state.oldVal,

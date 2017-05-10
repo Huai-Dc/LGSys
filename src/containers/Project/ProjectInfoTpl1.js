@@ -25,6 +25,8 @@ class ProjectInfoTpl1 extends Component {
 
     render() {
         const { pageData } = this.props;
+
+        console.log(pageData);
         if (!pageData.introduce) {
             return (
                 <View style={styles.container}>

@@ -42,6 +42,7 @@ class LoginPage extends Component {
         this.setState({
             loading: true,
         });
+        console.log(pageConfig.companyServer)
         GlobalData.POST(pageConfig.companyServer + '/Account/AjaxMobileLogin', {
             userName: this.state.userNameVal,
             passWord: this.state.userPwdVal,

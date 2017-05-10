@@ -24,6 +24,8 @@ import LoginPage from './containers/LoginPage';
 import WebPage from './components/WebPage';
 import GetUserForCountersignPage from './containers/Flow/GetUserForCountersignPage';
 import NotifyPage from './containers/Flow/NotifyPage';
+import HomePage from './containers/HomeIndex/HomeIndex';
+import FlowCenterPage from './containers/Flow/FlowCenterPage';
 
 function TabIcon(props) {
     if (props.selected) {
@@ -99,8 +101,8 @@ class Routes extends Component {
             <Router>
                 <Scene key="root">
                     <Scene initial={this.props.isLogin} key="Main" type="replace" tabs tabBarStyle={styles.tabBarStyle}>
-                        <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="CurrentFlowPage" component={CurrentFlowPage} title="待审流程" {...barConf} />
-                        <Scene icon={TabIcon} iconName="ios-time-outline" iconActiveName="ios-time" key="HistoryFlowPage" component={HistoryFlowPage} title="已审流程" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-home-outline" iconActiveName="ios-home" key="HomePage" component={HomePage} title="首页" {...barConf}/>
+                        <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="FlowCenterPage" component={FlowCenterPage} title="审批中心" {...barConf}/>
                         <Scene icon={TabIcon} iconName="ios-apps-outline" iconActiveName="ios-apps" key="NotePage" component={ProjectPage} title="项目" {...barConf} />
                         <Scene icon={TabIcon} iconName="ios-settings-outline" iconActiveName="ios-settings" key="SettingPage" component={SettingPage} title="设置" {...barConf} />
                     </Scene>

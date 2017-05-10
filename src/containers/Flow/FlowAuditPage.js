@@ -359,6 +359,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: GlobalData.headerbarHeight,
+        height: Dimensions.get('window').height - 120,
     },
     bottomBar: {
         height: 50,
@@ -414,13 +415,14 @@ const styles = StyleSheet.create({
     },
     moreActionButtonsBox: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        position: 'absolute',
+        //position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
         height: Dimensions.get('window').height - 120,
         flex: 1,
+        marginTop: -150,
     },
     ButtonsBox: {
         position: 'absolute',

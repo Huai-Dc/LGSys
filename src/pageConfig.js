@@ -2,7 +2,8 @@
 const useStaticData = false;
 const serverDebug = 'http://192.168.1.19:8000/';
 const serverRelease = 'http://192.168.1.178:9012/';
-const companyServer = 'http://des.cifi.com.cn:8033/';
+//const companyServer = 'http://des.cifi.com.cn:8033/';
+const companyServer = 'http://192.168.1.178:9057'; //测试
 // const companyServer = 'http://59.61.72.36:8033/'; // 正式
 // const companyServer = 'http://59.61.72.34:19029/'; // 测试
 // const companyServer = 'http://192.168.1.25:8030/';
@@ -48,4 +49,5 @@ export default {
         '/home/CityEngList',
     },
     changeUserPwdData: '/home/ChangeAppUserPwd',
+    homeIndexData: './home/HomeIndexJson', // 首页图片 及新闻数据
 };

@@ -44,7 +44,7 @@ class FlowApproveLogPage extends Component {
                                     <Image source={avatar} style={styles.avatarImage} />
                                 </View>
                                 <View style={{ width: 20 }}>
-                                    <FontAwesome name="check-circle" color={GlobalData.colors.main} size={18} style={{ backgroundColor: '#fff' }}/>
+                                    <FontAwesome name="check-circle" color={item.createDate ? GlobalData.colors.main : '#ccc'} size={18} style={{ backgroundColor: '#fff' }}/>
                                 </View>
                                 <View style={styles.info}>
                                     <View style={styles.actionInfo}>
