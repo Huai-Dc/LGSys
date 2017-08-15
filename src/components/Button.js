@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     button: {
         height: 40,
         alignSelf: 'stretch',
-        backgroundColor: '#ef473a',
-        borderColor: '#e42112',
+        backgroundColor: '#26a8e5',
+        borderColor: '#567598',
         borderWidth: 1,
         borderRadius: 3,
         justifyContent: 'center',

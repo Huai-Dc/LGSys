@@ -26,7 +26,7 @@ const Data = {
     FilePath: Platform.OS === 'ios' ? RNFS.DocumentDirectoryPath + '/ZTTX_files' : RNFS.ExternalStorageDirectoryPath + '/ZTTX_files',
 
     headerbarHeight: Platform.OS === 'ios' ? 64 : 55,
-
+    footerbarHeight: Platform.OS === 'ios' ? 50 : 50,
     // 系统常量定义
     STORAGE_UESER_KEY: 'user_key',
     STORAGE_HOME_DATA_KEY: 'home_key',
@@ -36,6 +36,9 @@ const Data = {
 
     getUserData() {
         return this.userData;
+    },
+
+    initData: {
     },
 
     user: {
@@ -64,8 +67,8 @@ const Data = {
         orange: '#ff5019',
         footerBar: '#ffffff',
         highlight: '#ff6600',
-        main: '#d33e39',
-        mainLight: '#e73318',
+        main: '#26a8e5', // '#d33e39',
+        mainLight: '#ffffff',
         mainStrong: '#b41f19',
     },
 

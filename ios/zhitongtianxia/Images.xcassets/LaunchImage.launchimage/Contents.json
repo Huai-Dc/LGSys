@@ -3,32 +3,32 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "旭辉320×480.png",
+      "filename" : "蓝光splash320x480.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "旭辉640×960.png",
+      "filename" : "蓝光splash640x960.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "旭辉640×1136.png",
+      "filename" : "蓝光splash640x1136.png",
       "extent" : "full-screen",
       "subtype" : "retina4",
       "scale" : "2x"
     },
     {
-      "extent" : "full-screen",
-      "idiom" : "iphone",
-      "subtype" : "736h",
-      "filename" : "旭辉1242×2208.png",
-      "minimum-system-version" : "8.0",
       "orientation" : "portrait",
+      "idiom" : "iphone",
+      "filename" : "蓝光splash1242x2208.png",
+      "extent" : "full-screen",
+      "minimum-system-version" : "8.0",
+      "subtype" : "736h",
       "scale" : "3x"
     },
     {
@@ -40,29 +40,29 @@
       "scale" : "3x"
     },
     {
-      "extent" : "full-screen",
+      "orientation" : "portrait",
       "idiom" : "iphone",
-      "subtype" : "667h",
-      "filename" : "旭辉750×1334.png",
+      "filename" : "蓝光splash750x1134.png",
+      "extent" : "full-screen",
       "minimum-system-version" : "8.0",
-      "orientation" : "portrait",
+      "subtype" : "667h",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "旭辉640×960-1.png",
+      "filename" : "蓝光splash640x960_1.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
     },
     {
-      "extent" : "full-screen",
+      "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "蓝光splash640x1136_1.png",
+      "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
       "subtype" : "retina4",
-      "filename" : "旭辉640×1136-1.png",
-      "minimum-system-version" : "7.0",
-      "orientation" : "portrait",
       "scale" : "2x"
     }
   ],

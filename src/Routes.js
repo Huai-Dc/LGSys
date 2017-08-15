@@ -8,24 +8,20 @@ import GlobalData from './GlobalData';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
 
-import CurrentFlowPage from './containers/Flow/CurrentFlowPage';
-import HistoryFlowPage from './containers/Flow/HistoryFlowPage';
-import ProjectPage from './containers/Project/ProjectPage';
 import SettingPage from './containers/SettingPage';
-import FlowContentPage from './containers/Flow/FlowContentPage';
-import FlowApproveLogPage from './containers/Flow/FlowApproveLogPage';
-import ProjectInfoPage from './containers/Project/ProjectInfoPage';
-import ProjectDetailPage from './containers/Project/ProjectDetailPage';
-import SelectUserPage from './containers/Flow/SelectUserPage';
-import SearchUserPage from './containers/Flow/SearchUserPage';
-import FlowAuditPage from './containers/Flow/FlowAuditPage';
-import CompanyIndex from './containers/CompanyIndex';
+// import FlowContentPage from './containers/Flow/FlowContentPage';
+// import FlowApproveLogPage from './containers/Flow/FlowApproveLogPage';
+// import ProjectInfoPage from './containers/Project/ProjectInfoPage';
+// import ProjectDetailPage from './containers/Project/ProjectDetailPage';
+// import SelectUserPage from './containers/Flow/SelectUserPage';
+// import SearchUserPage from './containers/Flow/SearchUserPage';
+// import FlowAuditPage from './containers/Flow/FlowAuditPage';
+// import CompanyIndex from './containers/CompanyIndex';
 import LoginPage from './containers/LoginPage';
-import WebPage from './components/WebPage';
-import GetUserForCountersignPage from './containers/Flow/GetUserForCountersignPage';
-import NotifyPage from './containers/Flow/NotifyPage';
-import HomePage from './containers/HomeIndex/HomeIndex';
-import FlowCenterPage from './containers/Flow/FlowCenterPage';
+// import WebPage from './components/WebPage';
+// import GetUserForCountersignPage from './containers/Flow/GetUserForCountersignPage';
+// import NotifyPage from './containers/Flow/NotifyPage';
+import MeetList from './containers/Meeting/MeetList';
 
 function TabIcon(props) {
     if (props.selected) {
@@ -38,8 +34,8 @@ function TabIcon(props) {
     }
     return (
         <View style={styles.tabIconBox}>
-            <Ionicons name={props.iconName} size={30} color={"#666666"} />
-            <Text style={[styles.tabIconText, { color: '#666666' }]}>{props.title}</Text>
+            <Ionicons name={props.iconName} size={30} color={"#bbbbbb"} />
+            <Text style={[styles.tabIconText, { color: '#bbbbbb' }]}>{props.title}</Text>
         </View>
     );
 }
@@ -96,27 +92,14 @@ class Routes extends Component {
     }
 
     render() {
-        console.log('this.props.isLogin', this.props.isLogin);
+        // console.log('this.props.isLogin', this.props.isLogin);
         return (
             <Router>
                 <Scene key="root">
                     <Scene initial={this.props.isLogin} key="Main" type="replace" tabs tabBarStyle={styles.tabBarStyle}>
-                        <Scene icon={TabIcon} iconName="ios-home-outline" iconActiveName="ios-home" key="HomePage" component={HomePage} title="首页" {...barConf}/>
-                        <Scene icon={TabIcon} iconName="ios-paper-outline" iconActiveName="ios-paper" key="FlowCenterPage" component={FlowCenterPage} title="审批中心" {...barConf}/>
-                        <Scene icon={TabIcon} iconName="ios-apps-outline" iconActiveName="ios-apps" key="NotePage" component={ProjectPage} title="项目" {...barConf} />
+                        <Scene icon={TabIcon} iconName="ios-person-outline" iconActiveName="ios-person" key="MeetList" hideNavBar={true} component={MeetList} title="会议" {...barConf}/>
                         <Scene icon={TabIcon} iconName="ios-settings-outline" iconActiveName="ios-settings" key="SettingPage" component={SettingPage} title="设置" {...barConf} />
                     </Scene>
-                    <Scene key="FlowContentPage" component={FlowContentPage} title="审批中心" {...navBarConf}/>
-                    <Scene key="WebPage" component={WebPage} title="网页" {...navBarConf}/>
-                    <Scene key="FlowAuditPage" component={FlowAuditPage} title="我要审批" {...navBarConf}/>
-                    <Scene key="FlowApproveLogPage" component={FlowApproveLogPage} title="审批意见" {...navBarConf}/>
-                    <Scene key="ProjectInfoPage" component={ProjectInfoPage} title="项目内页" {...navBarConf}/>
-                    <Scene key="ProjectDetailPage" component={ProjectDetailPage} title="项目详情" {...navBarConf}/>
-                    <Scene key="SelectUserPage" component={SelectUserPage} title="人员选择" {...navBarConf}/>
-                    <Scene key="SearchUserPage" component={SearchUserPage} title="人员选择" {...navBarConf}/>
-                    <Scene key="CompanyIndex" component={CompanyIndex} title="选择公司" {...barConf}/>
-                    <Scene key="GetUserForCountersignPage" component={GetUserForCountersignPage} title="选择人员" {...navBarConf}/>
-                    <Scene key="NotifyPage" component={NotifyPage} title="选择知会人员" {...navBarConf}/>
                     <Scene initial={!this.props.isLogin} key="LoginPage" component={LoginPage} title="登录" {...navBarConf}/>
                 </Scene>
             </Router>
@@ -160,9 +143,9 @@ const styles = StyleSheet.create({
     },
     tabBarStyle: {
         height: 50,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#393939',
         borderTopWidth: 1 / PixelRatio.get(),
-        borderTopColor: '#d5d5d5',
+        borderTopColor: '#393939',
     },
 });
 

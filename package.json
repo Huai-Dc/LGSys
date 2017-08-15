@@ -24,7 +24,6 @@
     "react-redux": "^4.4.5",
     "react-router": "2.6.1",
     "react-swipeable-views": "0.6.5",
-    "react-timer-mixin": "0.13.3",
     "redux": "^3.5.2",
     "redux-immutablejs": "0.0.8",
     "redux-router": "2.1.2",

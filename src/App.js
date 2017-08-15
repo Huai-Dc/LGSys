@@ -45,7 +45,7 @@ class App extends Component {
                 this.setState({
                     checkLogin: isLogin,
                 });
-                console.log('GlobalData.userData:', userData);
+                // console.log('GlobalData.userData:', userData);
             });
     }
     componentDidMount() {

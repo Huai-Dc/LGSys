@@ -15,7 +15,7 @@
       android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
-      android:icon="@mipmap/icon_xh"
+      android:icon="@mipmap/logo_lg"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"

@@ -15,7 +15,6 @@ import Button from '../components/Button';
 import pageConfig from '../pageConfig';
 import GlobalData from '../GlobalData';
 import { Actions, Toast } from '../modules/adapter';
-import { xhLogo } from '../assets/assets';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -25,6 +24,7 @@ class LoginPage extends Component {
             userNameVal: '',
             userPwdVal: '',
             loading: false,
+            loginUrl: null,
         };
     }
     setUserName(text) {
@@ -37,88 +37,118 @@ class LoginPage extends Component {
             userPwdVal: text,
         });
     }
+    setLoginUrl() {
+        GlobalData.GET(pageConfig.getAllData)
+            .then()
+            .then((data) => {
+                // console.log(data);
+                return JSON.parse(data);
+            })
+            .then((dataJson) => {
+                console.log(dataJson);
+                this.setState({
+                    loginUrl: dataJson.url,
+                });
+                GlobalData.initData = {
+                    customerCode: dataJson.customerCode,
+                    doMain: dataJson.domain,
+                    indexUrl: dataJson.indexUrl,
+                    isActive: dataJson.isActive,
+                    name: dataJson.name,
+                    ssoUrl: dataJson.ssoUrl,
+                    type: dataJson.type,
+                    underTable: dataJson.underTable,
+                    url: dataJson.url,
+                };
+            });
+    }
+
+    componentWillMount() {
+        this.setLoginUrl();
+    }
     doLogin() {
         if (this.state.userNameVal === '' || this.state.userPwdVal === '') return;
         this.setState({
             loading: true,
         });
-        console.log(pageConfig.companyServer)
-        GlobalData.POST(pageConfig.companyServer + '/Account/AjaxMobileLogin', {
-            userName: this.state.userNameVal,
-            passWord: this.state.userPwdVal,
-            // userName: 'admin',
-            // passWord: 'MZA3zhengshi@flkl',
-        }).then(data => {
-            if (data.state === 1) {
-                // Actions.pop();
-                console.log(data);
-                GlobalData.user = {
-                    userId: data.userId,
-                    name: data.name,
-                    loginName: data.loginName,
-                    // server: this.props.companyData.url,
-                    // logo: this.props.companyData.logo,
-                    server: pageConfig.companyServer,
-                    guid: data.guid,
-                };
-                AsyncStorage.setItem(GlobalData.STORAGE_UESER_KEY, JSON.stringify(GlobalData.user)).then(() => {
-                    Actions.Main({
-                        type: 'replace',
+        if (this.state.loginUrl) {
+            GlobalData.POST(pageConfig.companyServer + this.state.loginUrl, {
+                userName: this.state.userNameVal,
+                passWord: this.state.userPwdVal,
+            }).then(data => {
+                if (data.state === 1) {
+                    GlobalData.user = {
+                        userId: data.userId,
+                        name: data.name,
+                        loginName: data.loginName,
+                        server: pageConfig.companyServer,
+                        guid: data.guid,
+                    };
+                    AsyncStorage.setItem(GlobalData.STORAGE_UESER_KEY, JSON.stringify(GlobalData.user)).then(() => {
+                        Actions.Main({
+                            type: 'replace',
+                        });
+                    }, err => {
+                        console.log('AsyncStorage error!', err);
+                        this.setState({
+                            loading: false,
+                        });
                     });
-                }, err => {
-                    console.log('AsyncStorage error!', err);
+                } else {
+                    Toast.show(data.Message);
                     this.setState({
                         loading: false,
                     });
-                });
-            } else {
-                Toast.show(data.Message);
+                }
+            }, err => {
+                console.log('got en error!', err);
                 this.setState({
                     loading: false,
                 });
-            }
-        }, err => {
-            console.log('got en error!', err);
-            this.setState({
-                loading: false,
             });
-        });
+        } else {
+            Toast.show('数据初始化中,请稍后重试!');
+        }
     }
     render() {
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <Image style={styles.logoImg} source={xhLogo} />
-                    <View style={styles.inputBorder}>
-                        <TextInput
-                            autoFocus
-                            underlineColorAndroid="transparent"
-                            style={styles.input}
-                            placeholder="请输入用户名"
-                            ref="userNameInp"
-                            onChangeText={this.setUserName.bind(this)}
-                            onEndEditing={() => { this.refs.userPwdInp.focus(); }}
+            <Image source={require('../assets/images/backgroundimage.png')} style={styles.bgImage}>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <Image style={styles.logoImg} source={require('../assets/images/login_banner.png')} />
+                        <View style={styles.inputBorder}>
+                            <TextInput
+                                autoFocus
+                                underlineColorAndroid="transparent"
+                                style={styles.input}
+                                placeholder="请输入用户名"
+                                ref="userNameInp"
+                                onChangeText={this.setUserName.bind(this)}
+                                onEndEditing={() => { this.refs.userPwdInp.focus(); }}
+                            />
+                        </View>
+                        <View style={styles.inputBorder}>
+                            <TextInput
+                                password
+                                ref="userPwdInp"
+                                underlineColorAndroid="transparent"
+                                secureTextEntry={true}
+                                style={styles.input}
+                                placeholder="请输入密码"
+                                onChangeText={this.setUserPwd.bind(this)}
+                                onEndEditing={this.doLogin.bind(this)}
+                            />
+                        </View>
+                        <Button
+                            pending={this.state.loading}
+                            onPress={this.doLogin.bind(this)}
+                            style={{ marginTop: 20 }}
+                            disable={this.state.userNameVal === '' || this.state.userPwdVal === ''}
+                            text={'登录'}
                         />
                     </View>
-                    <View style={styles.inputBorder}>
-                        <TextInput
-                            password
-                            ref="userPwdInp"
-                            underlineColorAndroid="transparent"
-                            style={styles.input}
-                            placeholder="请输入密码"
-                            onChangeText={this.setUserPwd.bind(this)}
-                            onEndEditing={this.doLogin.bind(this)}
-                        />
-                    </View>
-                    <Button
-                        pending={this.state.loading}
-                        onPress={this.doLogin.bind(this)}
-                        style={{ marginTop: 20 }}
-                        disable={this.state.userNameVal === '' || this.state.userPwdVal === ''}
-                    />
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </Image>
         );
     }
 }
@@ -132,8 +162,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     logoImg: {
-        width: 200,
-        height: 120,
+        width: 250,
+        height: 150,
         marginTop: 20,
         marginBottom: 10,
         resizeMode: Image.resizeMode.contain,
@@ -163,6 +193,15 @@ const styles = StyleSheet.create({
         marginTop: 10,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    bgImage: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        resizeMode: 'stretch',
+        width: null,
+        height: null,
     },
 });
 

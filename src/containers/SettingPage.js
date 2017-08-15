@@ -32,10 +32,10 @@ class SettingPage extends Component {
     }
     doClearCatch() {
         RNFS.unlink(GlobalData.FilePath).then(e => {
-            console.log('clear ok', e);
+            // console.log('clear ok', e);
             Toast.show('缓存清除成功!');
         }, e => {
-            console.log('clear err', e);
+            // console.log('clear err', e);
             Toast.show('暂无缓存文件!');
         });
     }
@@ -50,7 +50,7 @@ class SettingPage extends Component {
         );
     }
     logout() {
-        console.log('logout');
+        // console.log('logout');
         AsyncStorage.removeItem(GlobalData.STORAGE_UESER_KEY).then(() => {
             Actions.LoginPage({
                 type: 'replace',
@@ -65,7 +65,7 @@ class SettingPage extends Component {
         // 获取DeviceToken
         //  <Button text="获取DeviceToken" onPress={this.getDeviceToken.bind(this)} />
         UmengPush.getDeviceToken(deviceToken => {
-            console.log('deviceToken: ', deviceToken);
+            // console.log('deviceToken: ', deviceToken);
             alert('deviceToken: ' + deviceToken);
             alert(deviceToken);
         });
@@ -82,7 +82,7 @@ class SettingPage extends Component {
         GlobalData.POST(GlobalData.user.server + pageConfig.changeUserPwdData, {
             newPwd: passwordData.newPassword,
             oldPwd: passwordData.oldPassword,
-            userId: GlobalData.user.guid,
+            userId: GlobalData.user.userId,
         }).then((data) => {
             if (data.Success) {
                 Alert.alert('提示', '修改成功');
@@ -99,10 +99,10 @@ class SettingPage extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.logoBox}>
-                    <Image source={xhLogo1} style={styles.logo} />
+                    <Image source={require('../assets/images/logo58x58.png')} style={styles.logo} />
                 </View>
                 <Text style={styles.p20}>
-                    旭辉设计系统
+                    蓝光会议决策系统
                 </Text>
                 <View style={styles.btnContainer}>
                     <Button text="清除缓存" onPress={this.clearCache.bind(this)} />
